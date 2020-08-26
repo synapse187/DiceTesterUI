@@ -9,6 +9,7 @@
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainPage.idl" />
+    <Midl Include="CharacterSheet.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -21,6 +22,7 @@
     <ClCompile Include="CharacterTools.cpp">
       <Filter>DiceRoller</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterSheet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -30,6 +32,10 @@
     <ClInclude Include="CharacterTools.h">
       <Filter>DiceRoller</Filter>
     </ClInclude>
+    <ClInclude Include="Gear.h">
+      <Filter>DiceRoller</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSheet.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

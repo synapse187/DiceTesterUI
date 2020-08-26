@@ -8,13 +8,18 @@
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;
-std::vector<charSheet> g_Players = { charSheet("Fulkan", 2, 20), charSheet("LoFat", 3, 20) };
 
 namespace winrt::DiceTesterUI::implementation
 {
+    std::vector<charSheet> g_Players = { charSheet("Fulkan", 2), charSheet("LoFat", 3) };
     MainPage::MainPage()
     {
         InitializeComponent();
+    }
+
+    DiceTesterUI::CharacterSheet MainPage::CharSheet()
+    {
+        return m_ViewModel;
     }
 
     int32_t MainPage::MyProperty()
@@ -27,7 +32,7 @@ namespace winrt::DiceTesterUI::implementation
         throw hresult_not_implemented();
     }
 
-    void MainPage::RefreshStats()
+    void MainPage::RefreshStatsPools()
     {
         //Player 1
         for (charSheet& i : g_Players)
@@ -35,83 +40,69 @@ namespace winrt::DiceTesterUI::implementation
             i.setSecondaryStats();
             i.setPools();
         }
-
-        p1PhysicalPool().Text(to_hstring(g_Players[0].pool.Physical));
-
-        p1Body().Text(to_hstring(g_Players[0].stat.Body));
-        p1Strength().Text(to_hstring(g_Players[0].stat.Strength));
-        p1Toughness().Text(to_hstring(g_Players[0].stat.Toughness));
-
-        p1Agility().Text(to_hstring(g_Players[0].stat.Agility));
-        p1Reflexes().Text(to_hstring(g_Players[0].stat.Reflexes));
-        p1Coordination().Text(to_hstring(g_Players[0].stat.Coordination));
-
-        p1MentalPool().Text(to_hstring(g_Players[0].pool.Mental));
-
-        p1Mind().Text(to_hstring(g_Players[0].stat.Mind));
-        p1Intelligence().Text(to_hstring(g_Players[0].stat.Intelligence));
-        p1Ego().Text(to_hstring(g_Players[0].stat.Ego));
-
-        p1Willpower().Text(to_hstring(g_Players[0].stat.Willpower));
-        p1Knowledge().Text(to_hstring(g_Players[0].stat.Knowledge));
-        p1SelfDiscipline().Text(to_hstring(g_Players[0].stat.SelfDiscipline));
-
-
-        p1CastPool().Text(to_hstring(g_Players[0].pool.Cast));
-
-        p1Power().Text(to_hstring(g_Players[0].stat.Power));
-        p1Force().Text(to_hstring(g_Players[0].stat.Force));
-        p1Channeling().Text(to_hstring(g_Players[0].stat.Channeling));
-
-        p1Control().Text(to_hstring(g_Players[0].stat.Control));
-        p1Manipulation().Text(to_hstring(g_Players[0].stat.Manipulation));
-        p1Reserve().Text(to_hstring(g_Players[0].stat.Reserve));
-
     }
+    
+    void MainPage::RefreshStatsBody()
+    {
+        p1PhysicalPool().Text(to_hstring(g_Players[0].pool.Physical));
+        p1Body().Text(to_hstring(g_Players[0].Stats.Physical.Body));
+    }
+    
+    void MainPage::RefreshStatsAgility()
+    {
+        p1PhysicalPool().Text(to_hstring(g_Players[0].pool.Physical));
+        p1Agility().Text(to_hstring(g_Players[0].Stats.Physical.Agility));
+    }
+
+    void MainPage::RefreshStatsMind()
+    {
+        p1MentalPool().Text(to_hstring(g_Players[0].pool.Mental));
+        p1Mind().Text(to_hstring(g_Players[0].Stats.Mental.Mind));
+    }
+    void MainPage::RefreshStatsWillpower()
+    {
+        p1MentalPool().Text(to_hstring(g_Players[0].pool.Mental));
+        p1Willpower().Text(to_hstring(g_Players[0].Stats.Mental.Willpower));
+    }
+    void MainPage::RefreshStatsPower()
+    {
+        p1CastPool().Text(to_hstring(g_Players[0].pool.Cast));
+        p1Power().Text(to_hstring(g_Players[0].Stats.Meta.Power));
+    }
+    void MainPage::RefreshStatsControl()
+    {
+        p1CastPool().Text(to_hstring(g_Players[0].pool.Cast));
+        p1Control().Text(to_hstring(g_Players[0].Stats.Meta.Control));
+    }
+
 
     void MainPage::GetStepSettings(DiceRoller::UIdata& settings)
     {
-        settings.StepSettings.quickP1[0][0] = trgP1StpUp().IsOn();
-        settings.StepSettings.quickP1[0][1] = trgP1StpDn().IsOn();
-        settings.StepSettings.quickP1[1][0] = trgP2StpUp().IsOn();
-        settings.StepSettings.quickP1[1][1] = trgP2StpDn().IsOn();
+    }
+
+    void MainPage::GetSimSettings(DiceRoller::UIdata& settings)
+    {
+        settings.GeneralSettings.useStatsP1 = P1UseStatsToggleSwitch().IsOn();
+        settings.GeneralSettings.itter = std::stoi(TextBoxItterations().Text().c_str());
+        settings.GeneralSettings.steps = std::stoi(TextBoxSteps().Text().c_str());
+        settings.GeneralSettings.combat = ToggleSwitchRunRoundCombat().IsOn();
+        settings.OutputSettings.outStep = CheckBoxOutStep().IsChecked().GetBoolean();
+        settings.OutputSettings.outRound = CheckBoxOutRound().IsChecked().GetBoolean();
+        settings.outputBox = TextBoxOutputWindow();
     }
 
     void MainPage::RunSim(IInspectable const&, RoutedEventArgs const&)
     {
-        int defTargP1 = std::stoi(TextBoxP1DefTarg().Text().c_str());
-        int defPoolP1 = std::stoi(to_string(TextBoxP1DefPool().Text()));
-        int defTargP2 = std::stoi(to_string(TextBoxP2DefTarg().Text()));
-        int defPoolP2 = std::stoi(to_string(TextBoxP2DefPool().Text()));
-        int defItter = std::stoi(to_string(TextBoxItterations().Text()));
-        int defStep = std::stoi(to_string(TextBoxSteps().Text()));
-        Controls::ComboBoxItem dieUsed = ComboBoxDieSelect().SelectedItem().as<Controls::ComboBoxItem>();
-        int dieToUse = std::stoi(to_string(dieUsed.Tag().as<hstring>()));
-        bool rndComSwitch = ToggleSwitchRunRoundCombat().IsOn();
-        bool outputSteps =  CheckBoxOutStep().IsChecked().GetBoolean();
-        bool outputRound = CheckBoxOutRound().IsChecked().GetBoolean();
         DiceRoller::UIdata UISettings;
+        GetSimSettings(UISettings);
         GetStepSettings(UISettings);
-        UISettings.GeneralSettings.useStatsP1 = ToggleUseStatsP1().IsOn();
-        UISettings.GeneralSettings.useStatsP2 = ToggleUseStatsP2().IsOn();
-        UISettings.GeneralSettings.die = dieToUse;
-        UISettings.PlayerData.P1.tar = defTargP1;
-        UISettings.PlayerData.P1.pool = defPoolP1;
-        UISettings.PlayerData.P2.tar = defTargP2;
-        UISettings.PlayerData.P2.pool = defPoolP2;
-        UISettings.GeneralSettings.itter = defItter;
-        UISettings.GeneralSettings.steps = defStep;
-        UISettings.GeneralSettings.combat = rndComSwitch;
-        UISettings.OutputSettings.outStep = outputSteps;
-        UISettings.OutputSettings.outRound = outputRound;
-        UISettings.outputBox = TextBoxOutputWindow();
         DiceRoller::RunSim(UISettings, g_Players);
     }
 }
 
 void winrt::DiceTesterUI::implementation::MainPage::ButtonClearOutput_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-    TextBoxOutputWindow().Text(L"");
+    TextBoxOutputWindow().Text(to_hstring(CharSheet().Strength()));
 }
 
 
@@ -120,8 +111,7 @@ void winrt::DiceTesterUI::implementation::MainPage::VerifyNumberBoxes(winrt::Win
 {
     Controls::TextBox curBox{ sender.as<Controls::TextBox>() };
     std::string curText = to_string(curBox.Text());
-    int curSize = curText.size();
-    if (curSize != 0)
+    if (curText.size() != 0)
     {
         for (int i = 0; i < curText.size(); i++)
         {
@@ -141,228 +131,171 @@ void winrt::DiceTesterUI::implementation::MainPage::VerifyNumberBoxes(winrt::Win
 }
 
 
-void winrt::DiceTesterUI::implementation::MainPage::StatButtonChange(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    Controls::Button curButton = sender.as<Controls::Button>();
-    enum statSel
-    {
-        StrU = 0,StrD,TghU,TghD,RefU, RefD,CorU, CorD,IntU, IntD,EgoU, EgoD,KnoU, KnoD,SDcU, SDcD,ForU, ForD,ChaU, ChaD,ManU, ManD,ResU, ResD
-    };
-    int butSel = std::stoi(to_string(curButton.AccessKey()));
-    statSel stsel = statSel(butSel);
-    switch (stsel)
-    {
-    //Body
-    case StrU:
-    {
-        g_Players[0].stat.Strength++;
-        break;
-    }
-    case StrD:
-    {
-        g_Players[0].stat.Strength--;
-        break;
-    }
-    case TghU:
-    {
-        g_Players[0].stat.Toughness++;
-        break;
-    }
-    case TghD:
-    {
-        g_Players[0].stat.Toughness--;
-        break;
-    }
-    //Body End
-    //Agility
-    case RefU:
-    {
-        g_Players[0].stat.Reflexes++;
-        break;
-    }
-    case RefD:
-    {
-        g_Players[0].stat.Reflexes--;
-        break;
-    }
-    case CorU:
-    {
-        g_Players[0].stat.Coordination++;
-        break;
-    }
-    case CorD:
-    {
-        g_Players[0].stat.Coordination--;
-        break;
-    }
-    //Agility End
-    //Mind
-    case IntU:
-    {
-        g_Players[0].stat.Intelligence++;
-        break;
-    }
-    case IntD:
-    {
-        g_Players[0].stat.Intelligence--;
-        break;
-    }
-    case EgoU:
-    {
-        g_Players[0].stat.Ego++;
-        break;
-    }
-    case EgoD:
-    {
-        g_Players[0].stat.Ego--;
-        break;
-    }
-    //Mind End
-    //Willpower
-    case KnoU:
-    {
-        g_Players[0].stat.Knowledge++;
-        break;
-    }
-    case KnoD:
-    {
-        g_Players[0].stat.Knowledge--;
-        break;
-    }
-    case SDcU:
-    {
-        g_Players[0].stat.SelfDiscipline++;
-        break;
-    }
-    case SDcD:
-    {
-        g_Players[0].stat.SelfDiscipline--;
-        break;
-    }
-    //Willpower End
-    //Power
-    case ForU:
-    {
-        g_Players[0].stat.Force++;
-        break;
-    }
-    case ForD:
-    {
-        g_Players[0].stat.Force--;
-        break;
-    }
-    case ChaU:
-    {
-        g_Players[0].stat.Channeling++;
-        break;
-    }
-    case ChaD:
-    {
-        g_Players[0].stat.Channeling--;
-        break;
-    }
-    //Power End
-    //Control
-    case ManU:
-    {
-        g_Players[0].stat.Manipulation++;
-        break;
-    }
-    case ManD:
-    {
-        g_Players[0].stat.Manipulation--;
-        break;
-    }
-    case ResU:
-    {
-        g_Players[0].stat.Reserve++;
-        break;
-    }
-    case ResD:
-    {
-        g_Players[0].stat.Reserve--;
-        break;
-    }
-    //Control End
-    default:
-        break;
-    }
-    RefreshStats();
-}
-
-
-void winrt::DiceTesterUI::implementation::MainPage::SettingsButtonChange(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
-{
-    Controls::Button curButton = sender.as<Controls::Button>();
-    enum setSel
-    {
-        p1TarUp, p1TarDn, p1PoolUp, p1PoolDn, p2TarUp, p2TarDn, p2PoolUp, p2PoolDn
-    };
-    int butSel = std::stoi(to_string(curButton.AccessKey()));
-    setSel stsel = setSel(butSel);
-    switch (stsel)
-    {
-        //Player 1 Targ
-    case p1TarUp:
-    {
-        TextBoxP1DefTarg().Text(to_hstring(std::stoi(TextBoxP1DefTarg().Text().c_str()) + 1));
-        break;
-    }
-    case p1TarDn:
-    {
-        TextBoxP1DefTarg().Text(to_hstring(std::stoi(TextBoxP1DefTarg().Text().c_str()) - 1));
-        break;
-    }
-    //Player 1 Pool
-    case p1PoolUp:
-    {
-        TextBoxP1DefPool().Text(to_hstring(std::stoi(TextBoxP1DefPool().Text().c_str()) + 1));
-        break;
-    }
-    case p1PoolDn:
-    {
-        TextBoxP1DefPool().Text(to_hstring(std::stoi(TextBoxP1DefPool().Text().c_str()) - 1));
-        break;
-    }
-    //Player 2 Targ
-    case p2TarUp:
-    {
-        TextBoxP2DefTarg().Text(to_hstring(std::stoi(TextBoxP2DefTarg().Text().c_str()) + 1));
-        break;
-    }
-    case p2TarDn:
-    {
-        TextBoxP2DefTarg().Text(to_hstring(std::stoi(TextBoxP2DefTarg().Text().c_str()) - 1));
-        break;
-    }
-    //Player 2 Pool
-    case p2PoolUp:
-    {
-        TextBoxP2DefPool().Text(to_hstring(std::stoi(TextBoxP2DefPool().Text().c_str()) + 1));
-        break;
-    }
-    case p2PoolDn:
-    {
-        TextBoxP2DefPool().Text(to_hstring(std::stoi(TextBoxP2DefPool().Text().c_str()) - 1));
-        break;
-    }
-    default:
-        break;
-    }
-}
-
-
 void winrt::DiceTesterUI::implementation::MainPage::EventToggleStats(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
 {
-    Controls::ToggleSwitch curSwitch = sender.as<Controls::ToggleSwitch>();
+    winrt::Windows::UI::Xaml::Controls::ToggleSwitch curSwitch = sender.as<winrt::Windows::UI::Xaml::Controls::ToggleSwitch>();
+    winrt::Windows::UI::Xaml::Visibility VisOn = winrt::Windows::UI::Xaml::Visibility::Visible;
+    winrt::Windows::UI::Xaml::Visibility VisOff = winrt::Windows::UI::Xaml::Visibility::Collapsed;
     if (curSwitch.Tag().as<hstring>() == L"p1")
     {
-        ContentControlP1Settings().IsEnabled(!curSwitch.IsOn());
-        ContentControlP1Stats().IsEnabled(curSwitch.IsOn());
+        if (!curSwitch.IsOn())
+        {
+            P1QuickStatsPanel().Visibility(VisOn);
+            P1StandardStatsPanel().Visibility(VisOff);
+        }
+        if (curSwitch.IsOn())
+        {
+            P1QuickStatsPanel().Visibility(VisOff);
+            P1StandardStatsPanel().Visibility(VisOn);
+        }
     }
-    if (curSwitch.Tag().as<hstring>() == L"p2")
+}
+
+namespace winrt::DiceTesterUI::implementation
+{
+    void winrt::DiceTesterUI::implementation::MainPage::Player1StatChange(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args)
     {
-        //ContentControlP2Settings().IsEnabled(!curSwitch.IsOn());
-        //ContentControlP2Stats().IsEnabled(curSwitch.IsOn());
+        enum class statSent
+        {
+            Str, Tgh, Ref, Cor, Int, Ego, Kno, SDc, For, Cha, Man, Res
+        };
+        switch (statSent(std::stoi(sender.AccessKey().c_str())))
+        {
+            //Body
+        case statSent::Str:
+        {
+            g_Players[0].Stats.Physical.Strength = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsBody();
+            break;
+        }
+        case statSent::Tgh:
+        {
+            g_Players[0].Stats.Physical.Toughness = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsBody();
+            break;
+        }
+        //Body End
+        //Agility
+        case statSent::Ref:
+        {
+            g_Players[0].Stats.Physical.Reflexes = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsAgility();
+            break;
+        }
+        case statSent::Cor:
+        {
+            g_Players[0].Stats.Physical.Coordination = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsAgility();
+            break;
+        }
+        //Agility End
+        //Mind
+        case statSent::Int:
+        {
+            g_Players[0].Stats.Mental.Intelligence = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsMind();
+            break;
+        }
+        case statSent::Ego:
+        {
+            g_Players[0].Stats.Mental.Ego = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsMind();
+            break;
+        }
+        //Mind End
+        //Willpower
+        case statSent::Kno:
+        {
+            g_Players[0].Stats.Mental.Knowledge = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsWillpower();
+            break;
+        }
+        case statSent::SDc:
+        {
+            g_Players[0].Stats.Mental.SelfDiscipline = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsWillpower();
+            break;
+        }
+        //Willpower End
+        //Power
+        case statSent::For:
+        {
+            g_Players[0].Stats.Meta.Force = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsPower();
+            break;
+        }
+        case statSent::Cha:
+        {
+            g_Players[0].Stats.Meta.Channeling = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsPower();
+            break;
+        }
+        //Power End
+        //Control
+        case statSent::Man:
+        {
+            g_Players[0].Stats.Meta.Manipulation = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsControl();
+            break;
+        }
+        case statSent::Res:
+        {
+            g_Players[0].Stats.Meta.Reserve = sender.Value();
+            RefreshStatsPools();
+            RefreshStatsControl();
+            break;
+        }
+        //Control End
+        default:
+            break;
+        }
     }
+}
+
+
+void winrt::DiceTesterUI::implementation::MainPage::StepMenuFlyoutItem_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e)
+{
+    winrt::Windows::UI::Xaml::Controls::MenuFlyoutItem curFlyoutItem = sender.as<winrt::Windows::UI::Xaml::Controls::MenuFlyoutItem>();
+    enum setStepToEnum
+    {
+        noStep,stepUp,stepDown
+    };
+
+    switch (setStepToEnum(std::stoi(curFlyoutItem.Tag().as<hstring>().c_str())))
+    {
+    case noStep:
+    {
+        curFlyoutItem.Parent().as<winrt::Windows::UI::Xaml::Controls::Button>().Content(winrt::box_value(L"D"));
+    }
+    default:
+        break;
+    }
+}
+
+
+void winrt::DiceTesterUI::implementation::MainPage::p1QuickHealth_ValueChanged(winrt::Microsoft::UI::Xaml::Controls::NumberBox const& sender, winrt::Microsoft::UI::Xaml::Controls::NumberBoxValueChangedEventArgs const& args)
+{
+    //int curNumber = CharSheet().Strength_GetSet();
+    //TextBoxOutputWindow().Text(L"D");
+}
+
+Windows::Foundation::Collections::IObservableVector<DiceTesterUI::CharacterSheet> winrt::DiceTesterUI::implementation::MainPage::CharacterSheets()
+{
+    Windows::Foundation::Collections::IObservableVector<DiceTesterUI::CharacterSheet> Players;
+    DiceTesterUI::CharacterSheet Player01;
+    DiceTesterUI::CharacterSheet Player02;
+    Players.Append(Player01);
+    Players.Append(Player02);
+    return Players;
 }

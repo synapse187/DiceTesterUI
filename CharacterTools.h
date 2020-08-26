@@ -1,6 +1,7 @@
 #pragma once
+#include "pch.h"
 #include <string>
-
+#include "Gear.h"
 
 class charSheet
 {
@@ -19,74 +20,92 @@ public:
     }bio;
 
     //Stats Construct
-    struct stat
+    struct Stats
     {
         //Physical Stats
-        //Body = Strengh + Toughness
-        int Body = 10;
-        int Strength = 10;
-        int Toughness = 10;
-        //Agility = Reflexes + Coordination
-        int Agility = 10;
-        int Reflexes = 10;
-        int Coordination = 10;
+        struct Physical
+        {
+            //Body = Strengh + Toughness
+            int Body = 10;
+            int Strength = 10;
+            int Toughness = 10;
 
+            //Agility = Reflexes + Coordination
+            int Agility = 10;
+            int Reflexes = 10;
+            int Coordination = 10;
+        }Physical;
         //Mental Stats
-        //Mind = Intelligence + Ego
-        int Mind = 10;
-        int Intelligence = 10;
-        int Ego = 10;
+        struct Mental
+        {
+            //Mind = Intelligence + Ego
+            int Mind = 10;
+            int Intelligence = 10;
+            int Ego = 10;
 
-        int Willpower = 10;
-        int SelfDiscipline = 10;
-        int Knowledge = 10;
+            //Willpower = Self Discipline + Knowledge
+            int Willpower = 10;
+            int SelfDiscipline = 10;
+            int Knowledge = 10;
+        }Mental;
+        //Meta Stats
+        struct Meta
+        {
+            //Power = Force + Channeling
+            int Power = 10;
+            int Force = 10;
+            int Channeling = 10;
 
-        //Magic Stats
-        int Power = 10;
-        int Force = 10;
-        int Channeling = 10;
-
-        int Control = 10;
-        int Manipulation = 10;
-        int Reserve = 10;
-
+            //Control = Manipulation + Reserve
+            int Control = 10;
+            int Manipulation = 10;
+            int Reserve = 10;
+        }Meta;
         //Terciary Stats
         int Inititive;
         int Looks;
-    }stat;
+    }Stats;
     
     struct statBonus
     {
         //Physical Stats
-        //Body = Strengh + Toughness
-        int BodyB;
-        int StrengthB;
-        int ToughnessB;
-
-        int AgilityB;
-        int ReflexesB;
-        int CoordinationB;
+        struct Physical
+        {
+            int BodyBonus;
+            int StrengthBonus;
+            int ToughnessBonus;
+ 
+            int AgilityBonus;
+            int ReflexesBonus;
+            int CoordinationBonus;
+        }Physical;
 
         //Mental Stats
-        int MindB;
-        int IntelligenceB;
-        int PersoaB;
+        struct Mental
+        {
+            int MindBonus;
+            int IntelligenceBonus;
+            int EgoBonus;
 
-        int WillpowerB;
-        int SelfDisciplineB;
-        int KnowledgeB;
+            int WillpowerBonus;
+            int SelfDisciplineBonus;
+            int KnowledgeBonus;
+        }Mental;
 
+        struct Meta
+        {
+            int ControlBonus;
+            int ManipulationBonus;
+            int RestraintBonus;
+
+            int PowerBonus;
+            int ChannelingBonus;
+            int ForceBonus;
+        }Meta;
         //Magic Stats
-        int ControlB;
-        int ManipulationB;
-        int RestraintB;
-
-        int PowerB;
-        int ChannelingB;
-        int ForceB;
 
         //Terciary Stats
-        int LooksB;
+        int LooksBonus;
     }statBonus;
 
     //Dice pool construct
@@ -104,15 +123,35 @@ public:
     }pool;
 
     //Damage and stuff
-    struct health
+    struct Health
     {
         int Energy = 0;
         int Hits = 0;
-    }health;
+    }Health;
 
     //Current Maths For Attacks and Defence
     struct CombatStats
     {
+        struct Strike
+        {
+            struct Melee
+            {
+                int TargetMod = 0;
+                int PoolMod = 0;
+            }Melee;
+            struct Ranged
+            {
+                int TargetMod = 0;
+                int PoolMod = 0;
+            }Ranged;
+        }Strike;
+
+        struct Block
+        {
+            int TargetMod = 0;
+            int PoolMod = 0;
+        }Block;
+
         //Attack
         int StrikeTar;
         int StrikePool;
@@ -175,29 +214,29 @@ public:
     }skill;
 
     struct cStats {
-        int curEnergy = 0;
-        int curHits = 0;
-        int curInit = 0;
-        int curPool = 0;
-        int curTargNum = 0;
-        int curDie = 20;
-        //attack stats
-        std::string curAttType = "Melee";
-        int curAttMod = 0;
-        int curDamBonus = 0;
-        //defence stats
-        std::string curDefType = "Block";
-        int curDefMod = 0;
-        int curDamReduc = 0;
-        //storage
+        int CurrentEndurance = 0;
+        int CurrentHealth = 0;
+        int CurrentTarget = 0;
+        int CurrentPool = 0;
+        int CurrentAccuracy = 0;
+        int CurrentDamage = 0;
+        int CurrentOffence = 0;
+        int CurrentDefence = 0;
+        int CurrentInititive = 0;
+    }cStats;
+
+    struct cData
+    {
         int poolArr[50]{};
         int curSuc = 0;
         float totSuc = 0.00f;
         int wins = 0;
         int wonBy = 0;
+        int damDone = 0;
+        float totDam = 0.00f;
         float wonByTotal = 0.00f;
         int kills = 0;
-    }cStats;
+    }cData;
 
     struct cPools {
         int curPhys;
@@ -205,25 +244,26 @@ public:
         int curCast;
     }cPools;
 
-    struct curWeapon {
-        int Accuracy = 0;
-        int Damage = 0;
-        int Reload = 0;
-        int DrawSpeed = 0;
-    }curWeapon;
+    Weapon curWeapon;
+    
+    charSheet(std::string name, int inID);
 
-    struct curArmor {
-        int DamageReduction;
-        int MoveReduction;
-    }curArmor;
+    //Get Set//
 
-    charSheet(std::string name, int inID, int inDie);
+    int Strength_GetSet();
+    void Strength_GetSet(int curValue);
+    int Toughness_GetSet();
+    void Toughness_GetSet(int curValue);
+    int Reflexes_GetSet();
+    void Reflexes_GetSet(int curValue);
+    int Coordination_GetSet();
+    void Coordination_GetSet(int curValue);
 
     void setSkills(int skillsToUse[2]);
+    void setCstats();
     void setCombatStats();
     void setSecondaryStats();
     void setPools();
-    void setStats(int statsToSet[12]);
 
     void setWeapon(int* pWeapon);
 

@@ -1,299 +1,506 @@
 ﻿<Page
-    x:Class="DiceTesterUI.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DiceTesterUI"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-    <Page.Resources>
-        <Style TargetType="TextBlock" x:Key="CatagoryStyle">
-            <Setter Property="Margin" Value="5,10,0,0"/>
-            <Setter Property="FontSize" Value="18em" />
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="TextDecorations" Value="Underline"/>
-        </Style>
-        <Style TargetType="TextBox" x:Key="SupStatBox">
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="Width" Value="75"/>
-            <Setter Property="FontSize" Value="15em"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="TextBox" x:Key="StatBoxes">
-            <Setter Property="IsReadOnly" Value="True"/>
-            <Setter Property="Width" Value="82"/>
-            <Setter Property="Height" Value="55"/>
-            <Setter Property="Margin" Value="0,0,3,0"/>
-            <Setter Property="FontSize" Value="14em" />
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Text" Value="10" />
-        </Style>
-        <Style TargetType="StackPanel" x:Key="ButStackPan">
-            <Setter Property="Width" Value="44" />
-            <Setter Property="Height" Value="58" />
-            <Setter Property="Margin" Value="0,0,-18,-6"/>
-        </Style>
-        <Style TargetType="ToggleSwitch" x:Key="stepTogStat">
-            <Setter Property="Margin" Value="0,0,0,-16"/>
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Button" x:Key="statButton">
-            <Setter Property="Height" Value="10" />
-            <Setter Property="Width" Value="22" />
-            <Setter Property="Margin" Value="0,0,0,1" />
-            <Setter Property="Background" Value="Coral" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
-    </Page.Resources>
-    <Grid Background="Aqua" HorizontalAlignment="Left" Width="1200">
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
-        
-        <!--Player 01 Stat Block-->
-        <StackPanel Grid.Column="0" Width="250" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5,10,0,0">
-            <TextBox Header="Player 1 Name:" TextAlignment="Center" Text="Fulkan"></TextBox>
-            <ContentControl x:Name="ContentControlP1Stats" IsEnabled="False">
-               <StackPanel>
-                <!--Physical Block-->
-                   <StackPanel Orientation="Vertical" Width="auto">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource CatagoryStyle}">Physical Pool:</TextBlock>
-                            <TextBlock x:Name="p1PhysicalPool" Style="{StaticResource CatagoryStyle}" Text="5"></TextBlock>
-                        </StackPanel>
-                        <!--Body-->
-                        <TextBox x:Name="p1Body" Header="Body" Text="10" Style="{StaticResource SupStatBox}" ></TextBox>
-                        <StackPanel Orientation="Horizontal" Width="auto" >
-                        <!--Strength-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="strStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="strUpBut"  Style="{StaticResource statButton}" AccessKey="0" Click="StatButtonChange"></Button>
-                            <Button x:Name="strDnBut" Style="{StaticResource statButton}" AccessKey="1" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="strStpDn" Style="{StaticResource stepTogStat}"></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Strength" Header="Strength" Style="{StaticResource StatBoxes}"></TextBox>
-                        <!--Toughness-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="tghStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="tghUpBut"  Style="{StaticResource statButton}" AccessKey="2" Click="StatButtonChange"></Button>
-                            <Button x:Name="tghDnBut" Style="{StaticResource statButton}" AccessKey="3" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="tghStpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Toughness" Header="Toughness" Style="{StaticResource StatBoxes}"></TextBox>
-                    </StackPanel>
-                    <!--Agility-->
-                    <TextBox x:Name="p1Agility" Header="Agility" Text="10" Style="{StaticResource SupStatBox}" ></TextBox>
-                    <StackPanel Orientation="Horizontal" Width="auto" >
-                        <!--Reflexes-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="refStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="refUpBut"  Style="{StaticResource statButton}" AccessKey="4" Click="StatButtonChange"></Button>
-                            <Button x:Name="refDnBut" Style="{StaticResource statButton}" AccessKey="5" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="refStpDn" Style="{StaticResource stepTogStat}"></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Reflexes" Header="Reflexes" Style="{StaticResource StatBoxes}"></TextBox>
-                        <!--Coordination-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="corStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="corUpBut"  Style="{StaticResource statButton}" AccessKey="6" Click="StatButtonChange"></Button>
-                            <Button x:Name="corDnBut" Style="{StaticResource statButton}" AccessKey="7" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="corStpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Coordination" Header="Coordination" Style="{StaticResource StatBoxes}"></TextBox>
-                    </StackPanel>
-                </StackPanel>
-                <!--Physical End-->
-                <!--Mental Block-->
-                <StackPanel Orientation="Vertical" Width="auto">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource CatagoryStyle}">Mental Pool:</TextBlock>
-                            <TextBlock x:Name="p1MentalPool" Style="{StaticResource CatagoryStyle}" Text="5"></TextBlock>
-                        </StackPanel>
-                        <!--Mind-->
-                    <TextBox x:Name="p1Mind" Header="Mind" Text="10" Style="{StaticResource SupStatBox}" ></TextBox>
-                    <StackPanel Orientation="Horizontal" Width="auto" >
-                        <!--Intelligence-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="intStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="intUpBut"  Style="{StaticResource statButton}" AccessKey="8" Click="StatButtonChange"></Button>
-                            <Button x:Name="intDnBut" Style="{StaticResource statButton}" AccessKey="9" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="intStpDn" Style="{StaticResource stepTogStat}"></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Intelligence" Header="Intelligence" Style="{StaticResource StatBoxes}"></TextBox>
-                        <!--Ego-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="egoStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="egoUpBut"  Style="{StaticResource statButton}" AccessKey="10" Click="StatButtonChange"></Button>
-                            <Button x:Name="egoDnBut" Style="{StaticResource statButton}" AccessKey="11" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="egoStpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Ego" Header="Ego" Style="{StaticResource StatBoxes}"></TextBox>
-                    </StackPanel>
-                    <!--Willpower-->
-                    <TextBox x:Name="p1Willpower" Header="Willpower" Text="10" Style="{StaticResource SupStatBox}" ></TextBox>
-                    <StackPanel Orientation="Horizontal" Width="auto" >
-                        <!--Knowledge-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="knoStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="knoUpBut"  Style="{StaticResource statButton}" AccessKey="12" Click="StatButtonChange"></Button>
-                            <Button x:Name="knoDnBut" Style="{StaticResource statButton}" AccessKey="13" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="knoStpDn" Style="{StaticResource stepTogStat}"></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Knowledge" Header="Knowledge" Style="{StaticResource StatBoxes}"></TextBox>
-                        <!--SelfDiscipline-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="sdcStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="sdcUpBut"  Style="{StaticResource statButton}" AccessKey="14" Click="StatButtonChange"></Button>
-                            <Button x:Name="sdcDnBut" Style="{StaticResource statButton}" AccessKey="15" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="sdcStpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1SelfDiscipline" Header="SelfDiscipline" Style="{StaticResource StatBoxes}"></TextBox>
-                    </StackPanel>
-                </StackPanel>
-                <!--Mental End-->
-                <!--Magic Block-->
-                <StackPanel Orientation="Vertical" Width="auto">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource CatagoryStyle}">Casting Pool:</TextBlock>
-                            <TextBlock x:Name="p1CastPool" Style="{StaticResource CatagoryStyle}" Text="5"></TextBlock>
-                        </StackPanel>
-                        <!--Power-->
-                    <TextBox x:Name="p1Power" Header="Power" Text="10" Style="{StaticResource SupStatBox}" ></TextBox>
-                    <StackPanel Orientation="Horizontal" Width="auto" >
-                        <!--Force-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="frcStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="frcUpBut"  Style="{StaticResource statButton}" AccessKey="16" Click="StatButtonChange"></Button>
-                            <Button x:Name="frcDnBut" Style="{StaticResource statButton}" AccessKey="17" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="frcStpDn" Style="{StaticResource stepTogStat}"></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Force" Header="Force" Style="{StaticResource StatBoxes}"></TextBox>
-                        <!--Channeling-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="chnStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="chnUpBut"  Style="{StaticResource statButton}" AccessKey="18" Click="StatButtonChange"></Button>
-                            <Button x:Name="chnDnBut" Style="{StaticResource statButton}" AccessKey="19" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="chnStpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Channeling" Header="Channeling" Style="{StaticResource StatBoxes}"></TextBox>
-                    </StackPanel>
-                    <!--Control-->
-                    <TextBox x:Name="p1Control" Header="Control" Text="10" Style="{StaticResource SupStatBox}" ></TextBox>
-                    <StackPanel Orientation="Horizontal" Width="auto" >
-                        <!--Manipulation-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="mnpStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="mnpUpBut"  Style="{StaticResource statButton}" AccessKey="20" Click="StatButtonChange"></Button>
-                            <Button x:Name="mnpDnBut" Style="{StaticResource statButton}" AccessKey="21" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="mnpStpDn" Style="{StaticResource stepTogStat}"></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Manipulation" Header="Manipulation" Style="{StaticResource StatBoxes}"></TextBox>
-                        <!--Reserve-->
-                        <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                            <ToggleSwitch x:Name="resStpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            <Button x:Name="resUpBut"  Style="{StaticResource statButton}" AccessKey="22" Click="StatButtonChange"></Button>
-                            <Button x:Name="resDnBut" Style="{StaticResource statButton}" AccessKey="23" Click="StatButtonChange"></Button>
-                            <ToggleSwitch x:Name="resStpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        </StackPanel>
-                        <TextBox x:Name="p1Reserve" Header="Reserve" Style="{StaticResource StatBoxes}"></TextBox>
-                    </StackPanel>
-                </StackPanel>
-                <!--Mental End-->
-            </StackPanel>
-            </ContentControl>
-        </StackPanel>
-        <!--Player 01 End-->
+x:Class="DiceTesterUI.MainPage"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:local="using:DiceTesterUI"
+xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+mc:Ignorable="d">
+	<Page.Resources>
+		<!--General-->
+		<!--Settings-->
+		<Style TargetType="ToggleSwitch" x:Key="StatSelectToggleSwitch">
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="RenderTransform">
+			<Setter.Value>
+				<ScaleTransform ScaleX="0.75" ScaleY="0.75"/>
+			</Setter.Value>
+			</Setter>
+		</Style>
+		<!--Player Block-->
+		<!--Settings-->
+		<!--Info Block-->
+		<Style TargetType="TextBlock" x:Key="StandardStatHeadderTextBlock">
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+		</Style>
+		<!--Pool Block-->
+		<Style TargetType="StackPanel" x:Key="PoolStackPannel">
+			<Setter Property="Orientation" Value="Horizontal"/>
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+			<Setter Property="Grid.RowSpan" Value="3"/>
+			<Setter Property="Grid.ColumnSpan" Value="2"/>
+		</Style>
+		<Style TargetType="TextBlock" x:Key="PoolNameTextBlock">
+			<Setter Property="Margin" Value="0,0,0,0"/>
+			<Setter Property="FontSize" Value="18em" />
+			<Setter Property="TextAlignment" Value="Left"/>
+			<Setter Property="TextDecorations" Value="Underline"/>
+		</Style>
+		<Style TargetType="TextBlock" x:Key="PoolValueTextBlock">
+			<Setter Property="Margin" Value="0,0,0,0"/>
+			<Setter Property="FontSize" Value="18em" />
+			<Setter Property="TextAlignment" Value="Left"/>
+			<Setter Property="TextDecorations" Value="Underline"/>
+		</Style>
+		<!--Super Stat Block-->
+		<Style TargetType="StackPanel" x:Key="SupStatStackPannel">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="Grid.RowSpan" Value="2"/>
+			<Setter Property="Grid.ColumnSpan" Value="2"/>
+			<Setter Property="Orientation" Value="Vertical"/>
+		</Style>
+		<Style TargetType="TextBlock" x:Key="SupStatNameTextBlock">
+			<Setter Property="Width" Value="auto"/>
+			<Setter Property="FontSize" Value="16em"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
+		<Style TargetType="TextBlock" x:Key="SupStatValueTextBlock">
+			<Setter Property="Width" Value="auto"/>
+			<Setter Property="FontSize" Value="15em"/>
+			<Setter Property="TextAlignment" Value="Center"/>
+		</Style>
+		<!--Sub Stat Block-->
+		<Style TargetType="StackPanel" x:Key="SubStatBlockStackPannel">
+			<Setter Property="Width" Value="125"/>
+			<Setter Property="Height" Value="55"/>
+			<Setter Property="VerticalAlignment" Value="Bottom"/>
+		</Style>
+		<Style TargetType="muxc:NumberBox" x:Key="SubStatNumberBox">
+			<Setter Property="Width" Value="100"/>
+			<Setter Property="SpinButtonPlacementMode" Value="Compact"/>
+			<Setter Property="Value" Value="10" />
+			<Setter Property="AcceptsExpression" Value="False"/>
+			<Setter Property="ValidationMode" Value="Disabled"/>
+			<Setter Property="Minimum" Value="0" />
+		</Style>
+		<Style TargetType="ToggleSwitch" x:Key="SubStatStepToggle">
+			<Setter Property="Width" Value="44" />
+			<Setter Property="Height" Value="30" />
+			<Setter Property="Margin" Value="0,20,-21,-29"/>
+			<Setter Property="VerticalAlignment" Value="Bottom"/>
+			<Setter Property="RenderTransform">
+				<Setter.Value>
+					<ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style TargetType="ComboBox" x:Key="StepComboBox">
+			<Setter Property="Width" Value="25"/>
+			<Setter Property="FlowDirection" Value="RightToLeft"/>
+		</Style>
+		<!--Quick Stats-->
+		<Style TargetType="ComboBox" x:Key="TypeComboBox">
+			<Setter Property="Width" Value="122"/>
+			<Setter Property="SelectedIndex" Value="0"/>
+		</Style>
+		<Style TargetType="Button" x:Key="StepButton">
+			<Setter Property="Width" Value="23"/>
+			<Setter Property="Padding" Value="0,0,0,0"/>
+		</Style>
 
 
-        <StackPanel Grid.Column="2" Width="125" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <!--Player 01 single round settings-->
-                <StackPanel Orientation="Vertical">
-                    <TextBlock>Player 1 Settings:</TextBlock>
-                    <ToggleSwitch x:Name="ToggleUseStatsP1" Header="Use Stats:" OffContent="Quick" OnContent="Full" Tag="p1" Toggled="EventToggleStats"></ToggleSwitch>
-                <ContentControl x:Name="ContentControlP1Settings">
-                    <StackPanel>
-                        <!--Target-->
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                                <ToggleSwitch x:Name="trgP1StpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                                <Button x:Name="trgP1UpBut"  Style="{StaticResource statButton}" AccessKey="0" Click="SettingsButtonChange"></Button>
-                                <Button x:Name="trgDnBut" Style="{StaticResource statButton}" AccessKey="1" Click="SettingsButtonChange"></Button>
-                                <ToggleSwitch x:Name="trgP1StpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            </StackPanel>
-                            <TextBox x:Name="TextBoxP1DefTarg" Header="P1 Target:" Text="14" Width="95"></TextBox>
-                        </StackPanel>
-                        <!--Pool-->
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                                <ToggleSwitch x:Name="polP1StpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                                <Button x:Name="polP1UpBut"  Style="{StaticResource statButton}" AccessKey="2" Click="SettingsButtonChange"></Button>
-                                <Button x:Name="polDnBut" Style="{StaticResource statButton}" AccessKey="3" Click="SettingsButtonChange"></Button>
-                                <ToggleSwitch x:Name="polP1StpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                            </StackPanel>
-                            <TextBox x:Name="TextBoxP1DefPool" Header="P1 Pool:" Text="6" Width="95"></TextBox>
-                        </StackPanel>
-                    </StackPanel>
-                </ContentControl>
-            </StackPanel>
-            <!--Player 01 End-->
+		<Style TargetType="StackPanel" x:Key="ButStackPan">
+			<Setter Property="Width" Value="44" />
+			<Setter Property="Height" Value="58" />
+			<Setter Property="Margin" Value="0,0,-18,-6"/>
+		</Style>
 
-            <!--Player 02 single round settings-->
-            <StackPanel Orientation="Vertical">
-                <TextBlock>Player 2 Settings:</TextBlock>
-                <ToggleSwitch x:Name="ToggleUseStatsP2" Header="Use Stats:" OffContent="Quick" OnContent="Full"></ToggleSwitch>
-                <!--Target-->
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                        <ToggleSwitch x:Name="trgP2StpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        <Button x:Name="trgP2UpBut"  Style="{StaticResource statButton}" AccessKey="4" Click="SettingsButtonChange"></Button>
-                        <Button x:Name="trgP2DnBut" Style="{StaticResource statButton}" AccessKey="5" Click="SettingsButtonChange"></Button>
-                        <ToggleSwitch x:Name="trgP2StpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                    </StackPanel>
-                    <TextBox x:Name="TextBoxP2DefTarg" Header="P1 Target:" Text="14" Width="95"></TextBox>
-                </StackPanel>
-                <!--Pool-->
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical" Style="{StaticResource ButStackPan}">
-                        <ToggleSwitch x:Name="polP2StpUp" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                        <Button x:Name="polP2UpBut"  Style="{StaticResource statButton}" AccessKey="6" Click="SettingsButtonChange"></Button>
-                        <Button x:Name="polP2DnBut" Style="{StaticResource statButton}" AccessKey="7" Click="SettingsButtonChange"></Button>
-                        <ToggleSwitch x:Name="polP2StpDn" Style="{StaticResource stepTogStat}" ></ToggleSwitch>
-                    </StackPanel>
-                    <TextBox x:Name="TextBoxP2DefPool" Header="P1 Pool:" Text="6" Width="95"></TextBox>
-                </StackPanel>
-            </StackPanel>
-            <!--Player 02 End-->
 
-            <ComboBox x:Name="ComboBoxDieSelect" SelectedIndex="5" Header="Die:">
-                <ComboBoxItem Tag="4">D4</ComboBoxItem>
-                <ComboBoxItem Tag="6">D6</ComboBoxItem>
-                <ComboBoxItem Tag="8">D8</ComboBoxItem>
-                <ComboBoxItem Tag="10">D10</ComboBoxItem>
-                <ComboBoxItem Tag="12">D12</ComboBoxItem>
-                <ComboBoxItem Tag="20">D20</ComboBoxItem>
-            </ComboBox>
-            <TextBox x:Name="TextBoxSteps" Header="Number of Steps:" Text="1" TextChanged="VerifyNumberBoxes"></TextBox>
-            <TextBox x:Name="TextBoxItterations" Header="Number of Itterations:" Text="1" TextChanged="VerifyNumberBoxes"></TextBox>
-            <TextBlock>Run: </TextBlock>
-            <ToggleSwitch x:Name="ToggleSwitchRunRoundCombat" OffContent="Round" OnContent="Combat"></ToggleSwitch>
-            <CheckBox x:Name="CheckBoxOutStep" IsChecked="True">Output Steps</CheckBox>
-            <CheckBox x:Name="CheckBoxOutRound" IsChecked="True">Output Round</CheckBox>
-            <Button x:Name="myButton" Click="RunSim" Content="Run Sim"/>
-        </StackPanel>
-        <StackPanel Grid.Column="3">
-            <TextBox x:Name="TextBoxOutputWindow" Width="500" Height="900" Margin="0,50,0,0" FontFamily="Courier New" AcceptsReturn="True" 
+		<Style TargetType="Button" x:Key="statButton">
+			<Setter Property="Height" Value="10" />
+			<Setter Property="Width" Value="22" />
+			<Setter Property="Margin" Value="0,0,0,1" />
+			<Setter Property="Background" Value="Coral" />
+			<Setter Property="BorderThickness" Value="0" />
+		</Style>
+	</Page.Resources>
+	<Grid Background="Aqua" HorizontalAlignment="Left" Width="1900">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="265"/>
+			<ColumnDefinition Width="265"/>
+			<ColumnDefinition Width="265"/>
+			<ColumnDefinition Width="265"/>
+			<ColumnDefinition Width="auto"/>
+			<ColumnDefinition Width="auto"/>
+		</Grid.ColumnDefinitions>
+		<!--Player 01 Block-->
+		<StackPanel Width="255" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5,5,0,0">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock>Use Stats:</TextBlock>
+				<ToggleSwitch x:Name="P1UseStatsToggleSwitch" OffContent="Quick" OnContent="Full" Tag="p1" Toggled="EventToggleStats" Style="{StaticResource StatSelectToggleSwitch}"></ToggleSwitch>
+			</StackPanel>
+			<!--Information Block-->
+			<TextBox Header="Player 1 Name:" TextAlignment="Center" Text="Player 01"></TextBox>
+			<!--END Information Block-->
+			<!--Standard Stats Panel-->
+			<StackPanel x:Name="P1StandardStatsPanel" Visibility="Collapsed">
+				<!--Physical Grid-->
+				<StackPanel>
+					<TextBlock Text="Physical Stats:" Style="{StaticResource StandardStatHeadderTextBlock}"/>
+					<Grid Width="220" Height="auto">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="123"/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="10"/>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+						</Grid.RowDefinitions>
+						<!--Pool-->
+						<StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource PoolStackPannel}">
+							<TextBlock Style="{StaticResource PoolNameTextBlock}">Pool:</TextBlock>
+							<TextBlock x:Name="p1PhysicalPool" Style="{StaticResource PoolValueTextBlock}" Text="5"/>
+						</StackPanel>
+						<!--END Pool-->
+						<!--Super Stat 01-->
+						<StackPanel Grid.Column="1" Grid.Row="0" Style="{StaticResource SupStatStackPannel}">
+							<TextBlock Text="Body" Style="{StaticResource SupStatNameTextBlock}"/>
+							<TextBlock x:Name="p1Body" Text="10" Style="{StaticResource SupStatValueTextBlock}" />
+						</StackPanel>
+						<!--END Super Stat 01-->
+						<!--Sub Stats 01-->
+						<!--Strength-->
+						<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel VerticalAlignment="Bottom">
+								<Button x:Name="StepStrengthButton" Content="S" Tag="0" Width="22" Padding="0,0,0,0">
+									<Button.Flyout>
+										<MenuFlyout>
+											<MenuFlyoutItem Click="StepMenuFlyoutItem_Click" Tag="StepOff">Step Off</MenuFlyoutItem>
+											<MenuFlyoutItem Click="StepMenuFlyoutItem_Click" Tag="StepUp">Step Up</MenuFlyoutItem>
+											<MenuFlyoutItem Click="StepMenuFlyoutItem_Click" Tag="StepDown">Step Down</MenuFlyoutItem>
+										</MenuFlyout>
+									</Button.Flyout>
+								</Button>
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Strength" Header="Strength:" AccessKey="0" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"></muxc:NumberBox>
+						</StackPanel>
+						<!--END Strength-->
+						<!--Toughness-->
+						<StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1ToughnessStepUp" Style="{StaticResource SubStatStepToggle}" />
+								<ToggleSwitch x:Name="p1ToughnessStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Toughness" Header="Toughness:" AccessKey="1" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Toughness-->
+						<!--END Sub Stats 01-->
+						<!--Super Stat 02-->
+						<StackPanel Grid.Column="1" Grid.Row="3" Style="{StaticResource SupStatStackPannel}">
+							<TextBlock Text="Agility" Style="{StaticResource SupStatNameTextBlock}"/>
+							<TextBlock x:Name="p1Agility" Text="10" Style="{StaticResource SupStatValueTextBlock}" />
+						</StackPanel>
+						<!--END Super Stat 02-->
+						<!--Sub Stats 02-->
+						<!--Reflexes-->
+						<StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1ReflexesStepUp" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+								<ToggleSwitch x:Name="p1ReflexesStepDn" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Reflexes" Header="Reflexes:" AccessKey="2" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"></muxc:NumberBox>
+						</StackPanel>
+						<!--END Reflexes-->
+						<!--Coordination-->
+						<StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1CoordinationStepUp" Style="{StaticResource SubStatStepToggle}" />
+								<ToggleSwitch x:Name="p1CoordinationStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Coordination" Header="Coordination:" AccessKey="3" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Coordination-->
+						<!--END Sub Stats 02-->
+					</Grid>
+				</StackPanel>
+				<!--END Physical Grid-->
+				<!--Mental Grid-->
+				<StackPanel>
+					<TextBlock Text="Mental Stats:" Style="{StaticResource StandardStatHeadderTextBlock}"/>
+					<Grid Width="220" Height="auto">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="123"/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="10"/>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+						</Grid.RowDefinitions>
+						<!--Pool-->
+						<StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource PoolStackPannel}">
+							<TextBlock Style="{StaticResource PoolNameTextBlock}">Pool:</TextBlock>
+							<TextBlock x:Name="p1MentalPool" Style="{StaticResource PoolValueTextBlock}" Text="5"/>
+						</StackPanel>
+						<!--END Pool-->
+						<!--Super Stat 01-->
+						<StackPanel Grid.Column="1" Grid.Row="0" Style="{StaticResource SupStatStackPannel}">
+							<TextBlock Text="Mind" Style="{StaticResource SupStatNameTextBlock}"/>
+							<TextBlock x:Name="p1Mind" Text="10" Style="{StaticResource SupStatValueTextBlock}" />
+						</StackPanel>
+						<!--END Super Stat 01-->
+						<!--Sub Stats 01-->
+						<!--Intelligence-->
+						<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1IntelligenceStepUp" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+								<ToggleSwitch x:Name="p1IntelligenceStepDn" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Intelligence" Header="Intelligence:" AccessKey="4" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"></muxc:NumberBox>
+						</StackPanel>
+						<!--END Intelligence-->
+						<!--Ego-->
+						<StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1EgoStepUp" Style="{StaticResource SubStatStepToggle}" />
+								<ToggleSwitch x:Name="p1EgoStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Ego" Header="Ego:" AccessKey="5" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Ego-->
+						<!--END Sub Stats 01-->
+						<!--Super Stat 02-->
+						<StackPanel Grid.Column="1" Grid.Row="3" Style="{StaticResource SupStatStackPannel}">
+							<TextBlock Text="Willpower" Style="{StaticResource SupStatNameTextBlock}"/>
+							<TextBlock x:Name="p1Willpower" Text="10" Style="{StaticResource SupStatValueTextBlock}" />
+						</StackPanel>
+						<!--END Super Stat 02-->
+						<!--Sub Stats 02-->
+						<!--Knowledge-->
+						<StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1KnowledgeStepUp" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+								<ToggleSwitch x:Name="p1KnowledgeStepDn" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Knowledge" Header="Knowledge:" AccessKey="6" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"></muxc:NumberBox>
+						</StackPanel>
+						<!--END Knowledge-->
+						<!--SelfDiscipline-->
+						<StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1SelfDisciplineStepUp" Style="{StaticResource SubStatStepToggle}" />
+								<ToggleSwitch x:Name="p1SelfDisciplineStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1SelfDiscipline" Header="SelfDiscipline:" AccessKey="7" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END SelfDiscipline-->
+						<!--END Sub Stats 02-->
+					</Grid>
+				</StackPanel>
+				<!--END Mental Grid-->
+				<!--Magic Grid-->
+				<StackPanel>
+					<TextBlock Text="Meta Stats:" Style="{StaticResource StandardStatHeadderTextBlock}"/>
+					<Grid Width="220" Height="auto">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="123"/>
+							<ColumnDefinition/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="10"/>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+						</Grid.RowDefinitions>
+						<!--Pool-->
+						<StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource PoolStackPannel}">
+							<TextBlock Style="{StaticResource PoolNameTextBlock}">Pool:</TextBlock>
+							<TextBlock x:Name="p1CastPool" Style="{StaticResource PoolValueTextBlock}" Text="5"/>
+						</StackPanel>
+						<!--END Pool-->
+						<!--Super Stat 01-->
+						<StackPanel Grid.Column="1" Grid.Row="0" Style="{StaticResource SupStatStackPannel}">
+							<TextBlock Text="Power" Style="{StaticResource SupStatNameTextBlock}"/>
+							<TextBlock x:Name="p1Power" Text="10" Style="{StaticResource SupStatValueTextBlock}" />
+						</StackPanel>
+						<!--END Super Stat 01-->
+						<!--Sub Stats 01-->
+						<!--Force-->
+						<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1ForceStepUp" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+								<ToggleSwitch x:Name="p1ForceStepDn" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Force" Header="Force:" AccessKey="8" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"></muxc:NumberBox>
+						</StackPanel>
+						<!--END Force-->
+						<!--Channeling-->
+						<StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1ChannelingStepUp" Style="{StaticResource SubStatStepToggle}" />
+								<ToggleSwitch x:Name="p1ChannelingStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Channeling" Header="Channeling:" AccessKey="9" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Channeling-->
+						<!--END Sub Stats 01-->
+						<!--Super Stat 02-->
+						<StackPanel Grid.Column="1" Grid.Row="3" Style="{StaticResource SupStatStackPannel}">
+							<TextBlock Text="Control" Style="{StaticResource SupStatNameTextBlock}"/>
+							<TextBlock x:Name="p1Control" Text="10" Style="{StaticResource SupStatValueTextBlock}" />
+						</StackPanel>
+						<!--END Super Stat 02-->
+						<!--Sub Stats 02-->
+						<!--Manipulation-->
+						<StackPanel Grid.Column="0" Grid.Row="3" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1ManipulationStepUp" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+								<ToggleSwitch x:Name="p1ManipulationStepDn" Style="{StaticResource SubStatStepToggle}" ></ToggleSwitch>
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Manipulation" Header="Manipulation:" AccessKey="10" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"></muxc:NumberBox>
+						</StackPanel>
+						<!--END Manipulation-->
+						<!--Reserve-->
+						<StackPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+								<ToggleSwitch x:Name="p1ReserveStepUp" Style="{StaticResource SubStatStepToggle}" />
+								<ToggleSwitch x:Name="p1ReserveStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1Reserve" Header="Reserve:" AccessKey="11" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Reserve-->
+						<!--END Sub Stats 02-->
+					</Grid>
+				</StackPanel>
+				<!--END Magic Grid-->
+			</StackPanel>
+			<!--END Standard Stats Panel-->
+				<!--Quick Stats Settings-->
+			<StackPanel x:Name="P1QuickStatsPanel" Visibility="Visible">
+				<TextBlock>Quick Stats</TextBlock>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="123"/>
+							<ColumnDefinition Width="123"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="55"/>
+							<RowDefinition Height="55"/>
+						<RowDefinition Height="55"/>
+						<RowDefinition Height="55"/>
+					</Grid.RowDefinitions>
+					<!--Health-->
+					<StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+						<StackPanel VerticalAlignment="Bottom">
+							<Button x:Name="StepP1HealthButton" Content="S" Tag="0" Style="{StaticResource StepButton}">
+								<Button.Flyout>
+									<MenuFlyout>
+										<MenuFlyoutItem Click="StepMenuFlyoutItem_Click" Tag="0">Step Off</MenuFlyoutItem>
+										<MenuFlyoutItem Click="StepMenuFlyoutItem_Click" Tag="1">Step Up</MenuFlyoutItem>
+										<MenuFlyoutItem Click="StepMenuFlyoutItem_Click" Tag="2">Step Down</MenuFlyoutItem>
+									</MenuFlyout>
+								</Button.Flyout>
+							</Button>
+						</StackPanel>
+						<muxc:NumberBox x:Name="p1QuickHealth" Header="Health:" AccessKey="0" ValueChanged="p1QuickHealth_ValueChanged" Value="{x:Bind Path=CharSheet.Strength, Mode=TwoWay}" Style="{StaticResource SubStatNumberBox}"/>
+					</StackPanel>
+					<!--END Health-->
+					<!--Endurance-->
+					<StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+						<StackPanel>
+							<ToggleSwitch x:Name="p1QuickEnduranceStepUp" Style="{StaticResource SubStatStepToggle}" />
+							<ToggleSwitch x:Name="p1QuickEnduranceStepDn" Style="{StaticResource SubStatStepToggle}" />
+						</StackPanel>
+						<muxc:NumberBox x:Name="p1QuickEndurance" Header="Endurance:" AccessKey="0" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+					</StackPanel>
+					<!--END Endurance-->
+					<!--Pool-->
+						<StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+							<ToggleSwitch x:Name="p1QuickPoolStepUp" Style="{StaticResource SubStatStepToggle}" />
+							<ToggleSwitch x:Name="p1QuickPoolStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+							<muxc:NumberBox x:Name="p1QuickPool" Header="Pool:" AccessKey="0" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Pool-->
+						<!--Target-->
+						<StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+							<ToggleSwitch x:Name="p1QuickTargetStepUp" Style="{StaticResource SubStatStepToggle}" />
+							<ToggleSwitch x:Name="p1QuickTargetStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+						<muxc:NumberBox x:Name="p1QuickTarget" Header="Target:" AccessKey="0" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Target-->
+						<!--Damage-->
+						<StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+							<ToggleSwitch x:Name="p1QuickDamageStepUp" Style="{StaticResource SubStatStepToggle}" />
+							<ToggleSwitch x:Name="p1QuickDamageStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+						<muxc:NumberBox x:Name="p1QuickDamage" Header="Damage:" AccessKey="0" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Damage-->
+						<!--Accuracy-->
+						<StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" Style="{StaticResource SubStatBlockStackPannel}">
+							<StackPanel>
+							<ToggleSwitch x:Name="p1QuickAccuracyStepUp" Style="{StaticResource SubStatStepToggle}" />
+							<ToggleSwitch x:Name="p1QuickAccuracyStepDn" Style="{StaticResource SubStatStepToggle}" />
+							</StackPanel>
+						<muxc:NumberBox x:Name="p1QuickAccuracy" Header="Accuracy:" AccessKey="0" ValueChanged="Player1StatChange" Style="{StaticResource SubStatNumberBox}"/>
+						</StackPanel>
+						<!--END Accuracy-->
+					<!--Attack Type-->
+					<StackPanel Grid.Column="0" Grid.Row="3" Orientation="Vertical" Style="{StaticResource SubStatBlockStackPannel}">
+						<StackPanel>
+						<ComboBox x:Name="p1OffenceTypeComboBox" Header="Offence Type:" Style="{StaticResource TypeComboBox}">
+							<ComboBoxItem>Melee Strike</ComboBoxItem>
+							<ComboBoxItem>Ranged Strike</ComboBoxItem>
+							<ComboBoxItem>Grapple</ComboBoxItem>
+						</ComboBox>
+						</StackPanel>
+					</StackPanel>
+					<!--END Attack Type-->
+					<!--Defence Type-->
+					<StackPanel Grid.Column="1" Grid.Row="3" Orientation="Vertical" Style="{StaticResource SubStatBlockStackPannel}">
+						<StackPanel>
+							<ComboBox x:Name="p1DefenceTypeComboBox" Header="Defence Type:" Style="{StaticResource TypeComboBox}">
+								<ComboBoxItem>Block</ComboBoxItem>
+								<ComboBoxItem>Parry</ComboBoxItem>
+								<ComboBoxItem>Dodge</ComboBoxItem>
+							</ComboBox>
+						</StackPanel>
+					</StackPanel>
+					<!--END Defence Type-->
+				</Grid>
+				</StackPanel>
+			<!--END Quick Stats Settings-->
+		</StackPanel>
+		<!--Player 01 End-->
+
+		<StackPanel Grid.Column="1" Width="250" Orientation="Vertical" HorizontalAlignment="Center" Height="1020" Background="Gray" VerticalAlignment="Top" Margin="5,10,10,0">
+			<TextBlock>P1 Extras PLACEHOLDER!!!</TextBlock>
+		</StackPanel>
+		<!--Sim Settings-->
+		<StackPanel Grid.Column="4" Width="250" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBox x:Name="TextBoxSteps" Header="Number of Steps:" Text="1" TextChanged="VerifyNumberBoxes"></TextBox>
+			<TextBox x:Name="TextBoxItterations" Header="Number of Itterations:" Text="1" TextChanged="VerifyNumberBoxes"></TextBox>
+			<TextBlock>Run:</TextBlock>
+			<ToggleSwitch x:Name="ToggleSwitchRunRoundCombat" OffContent="Round" OnContent="Combat"></ToggleSwitch>
+			<CheckBox x:Name="CheckBoxOutStep" IsChecked="True">Output Steps</CheckBox>
+			<CheckBox x:Name="CheckBoxOutRound" IsChecked="True">Output Round</CheckBox>
+			<Button x:Name="myButton" Click="RunSim" Content="Run Sim"/>
+		</StackPanel>
+		<!--END Sim Settings-->
+		<!--Output Window-->
+		<StackPanel Grid.Column="5" VerticalAlignment="Top">
+			<TextBox x:Name="TextBoxOutputWindow" Width="500" Height="1000" Margin="0,5,0,0" FontFamily="Courier New" AcceptsReturn="True" 
                      ScrollViewer.VerticalScrollMode="Auto" 
                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                      ></TextBox>
-            <Button x:Name="ButtonClearOutput" Click="ButtonClearOutput_Click"></Button>
-        </StackPanel>
-    </Grid>
+			<Button x:Name="ButtonClearOutput" Content="Clear Output" Click="ButtonClearOutput_Click"></Button>
+		</StackPanel>
+		<!--END Output Window-->
+	</Grid>
 </Page>

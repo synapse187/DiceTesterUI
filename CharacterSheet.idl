@@ -1,0 +1,8 @@
+namespace DiceTesterUI
+{
+	runtimeclass CharacterSheet : Windows.UI.Xaml.Data.INotifyPropertyChanged
+	{
+		CharacterSheet();
+		Double Strength;
+	}
+}

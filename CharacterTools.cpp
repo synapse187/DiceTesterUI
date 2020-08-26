@@ -3,51 +3,62 @@
 #include <string>
 #include "CharacterTools.h"
 
-charSheet::charSheet(std::string name, int inID, int inDie)
+charSheet::charSheet(std::string name, int inID)
 {
     bio.charName = name;
     ID = inID;
-    cStats.curDie = inDie;
+    Stats.Physical.Strength = 10;
+    Stats.Physical.Toughness = 10;
+    Stats.Physical.Reflexes = 10;
+    Stats.Physical.Coordination = 10;
+    Stats.Mental.Intelligence = 10;
+    Stats.Mental.Ego = 10;
+    Stats.Mental.SelfDiscipline = 10;
+    Stats.Mental.Knowledge = 10;
+    Stats.Meta.Force = 10;
+    Stats.Meta.Channeling = 10;
+    Stats.Meta.Manipulation = 10;
+    Stats.Meta.Reserve = 10;
 }
 
 
 void charSheet::setSecondaryStats()
 {
-    stat.Body = (stat.Strength + stat.Toughness) / 2;
-    stat.Agility = (stat.Reflexes + stat.Coordination) / 2;
-    stat.Mind = (stat.Intelligence + stat.Ego) / 2;
-    stat.Willpower = (stat.SelfDiscipline + stat.Knowledge) / 2;
-    stat.Control = (stat.Manipulation + stat.Reserve) / 2;
-    stat.Power = (stat.Force + stat.Channeling) / 2;
-    stat.Inititive = (stat.Agility + stat.Mind);
-    health.Energy = (stat.Body + stat.Mind);
-    health.Hits = stat.Toughness + stat.SelfDiscipline;
+    Stats.Physical.Body =    (Stats.Physical.Strength + Stats.Physical.Toughness) / 2;
+    Stats.Physical.Agility = (Stats.Physical.Reflexes + Stats.Physical.Coordination) / 2;
+    Stats.Mental.Mind =      (Stats.Mental.Intelligence + Stats.Mental.Ego) / 2;
+    Stats.Mental.Willpower = (Stats.Mental.SelfDiscipline + Stats.Mental.Knowledge) / 2;
+    Stats.Meta.Control =     (Stats.Meta.Manipulation + Stats.Meta.Reserve) / 2;
+    Stats.Meta.Power =       (Stats.Meta.Force + Stats.Meta.Channeling) / 2;
+    Stats.Inititive =        (Stats.Physical.Agility + Stats.Mental.Mind);
+    Health.Energy =          (Stats.Physical.Body + Stats.Mental.Mind);
+    Health.Hits =            (Stats.Physical.Toughness + Stats.Mental.SelfDiscipline);
 
     //set bonuses
     int BonusDevisor = 4;
-    statBonus.BodyB = stat.Body / BonusDevisor;
-    statBonus.StrengthB = stat.Strength / BonusDevisor;
-    statBonus.ToughnessB = stat.Toughness / BonusDevisor;
+    statBonus.Physical.BodyBonus = Stats.Physical.Body / BonusDevisor;
+    statBonus.Physical.StrengthBonus = Stats.Physical.Strength / BonusDevisor;
+    statBonus.Physical.ToughnessBonus = Stats.Physical.Toughness / BonusDevisor;
 
-    statBonus.AgilityB = stat.Agility / BonusDevisor;
-    statBonus.ReflexesB = stat.Reflexes / BonusDevisor;
-    statBonus.CoordinationB = stat.Coordination / BonusDevisor;
+    statBonus.Physical.AgilityBonus = Stats.Physical.Agility / BonusDevisor;
+    statBonus.Physical.ReflexesBonus = Stats.Physical.Reflexes / BonusDevisor;
+    statBonus.Physical.CoordinationBonus = Stats.Physical.Coordination / BonusDevisor;
 
-    statBonus.MindB = stat.Mind / BonusDevisor;
-    statBonus.IntelligenceB = stat.Intelligence / BonusDevisor;
-    statBonus.PersoaB = stat.Ego / BonusDevisor;
+    statBonus.Mental.MindBonus = Stats.Mental.Mind / BonusDevisor;
+    statBonus.Mental.IntelligenceBonus = Stats.Mental.Intelligence / BonusDevisor;
+    statBonus.Mental.EgoBonus = Stats.Mental.Ego / BonusDevisor;
 
-    statBonus.WillpowerB = stat.Willpower / BonusDevisor;
-    statBonus.SelfDisciplineB = stat.SelfDiscipline / BonusDevisor;
-    statBonus.KnowledgeB = stat.Knowledge / BonusDevisor;
+    statBonus.Mental.WillpowerBonus = Stats.Mental.Willpower / BonusDevisor;
+    statBonus.Mental.SelfDisciplineBonus = Stats.Mental.SelfDiscipline / BonusDevisor;
+    statBonus.Mental.KnowledgeBonus = Stats.Mental.Knowledge / BonusDevisor;
 
-    statBonus.PowerB = stat.Power / BonusDevisor;
-    statBonus.ChannelingB = stat.Channeling / BonusDevisor;
-    statBonus.ForceB = stat.Force / BonusDevisor;
+    statBonus.Meta.PowerBonus = Stats.Meta.Power / BonusDevisor;
+    statBonus.Meta.ChannelingBonus = Stats.Meta.Channeling / BonusDevisor;
+    statBonus.Meta.ForceBonus = Stats.Meta.Force / BonusDevisor;
 
-    statBonus.ControlB = stat.Control / BonusDevisor;
-    statBonus.ManipulationB = stat.Manipulation / BonusDevisor;
-    statBonus.RestraintB = stat.Reserve / BonusDevisor;
+    statBonus.Meta.ControlBonus = Stats.Meta.Control / BonusDevisor;
+    statBonus.Meta.ManipulationBonus = Stats.Meta.Manipulation / BonusDevisor;
+    statBonus.Meta.RestraintBonus = Stats.Meta.Reserve / BonusDevisor;
 
 }
 
@@ -60,7 +71,7 @@ void charSheet::setSkills(int skillsToUse[2])
 void charSheet::setCombatStats()
 {
     //Att
-    CombatStats.StrikeTar = statBonus.StrengthB;
+    CombatStats.StrikeTar = statBonus.Physical.StrengthBonus;
     CombatStats.StrikePool = skill.Combat.Melee.Brawl;
 
     CombatStats.GrappleTar = 0;
@@ -76,37 +87,45 @@ void charSheet::setCombatStats()
     CombatStats.ParryTar = 0;
     CombatStats.ParryPool = 0;
     //Toughness + Reaction + Skill
-    CombatStats.BlockTar = statBonus.ToughnessB;
+    CombatStats.BlockTar = statBonus.Physical.ToughnessBonus;
     CombatStats.BlockPool = skill.Combat.Melee.Brawl;
 
+}
+
+void charSheet::setCstats()
+{
+    cStats.CurrentHealth = Health.Hits;
+    cStats.CurrentEndurance = Health.Energy;
+    cStats.CurrentPool = CombatStats.Strike.Melee.PoolMod;
+    cStats.CurrentTarget = CombatStats.Strike.Melee.TargetMod;
 }
 
 void charSheet::setPools()
 {
     int poolDevisor = 4;
-    pool.Physical = (stat.Body + stat.Agility) / poolDevisor;
-    pool.Mental = (stat.Intelligence + stat.Ego) / poolDevisor;
-    pool.Cast = (stat.Power + stat.Control) / poolDevisor;
+    pool.Physical = (Stats.Physical.Body + Stats.Physical.Agility) / poolDevisor;
+    pool.Mental = (Stats.Mental.Mind + Stats.Mental.Willpower) / poolDevisor;
+    pool.Cast = (Stats.Meta.Power + Stats.Meta.Control) / poolDevisor;
 }
 
 void charSheet::rollPool()
 {
-    for (int i = 0; i < cStats.curPool; i++)
+    for (int i = 0; i < cStats.CurrentPool; i++)
     {
-        cStats.poolArr[i] = rand() % cStats.curDie + 1;
+        cData.poolArr[i] = rand() % 20 + 1;
     }
 }
 
 
 void charSheet::countSuccesses()
 {
-    cStats.curSuc = 0;
-    for (int i = 0; i < cStats.curPool; i++)
+    cData.curSuc = 0;
+    for (int i = 0; i < cStats.CurrentPool; i++)
     {
-        if (cStats.poolArr[i] >= cStats.curTargNum)
+        if (cData.poolArr[i] >= cStats.CurrentTarget)
         {
-            cStats.curSuc++;
-            cStats.totSuc++;
+            cData.curSuc++;
+            cData.totSuc++;
         }
     }
 }
@@ -114,9 +133,9 @@ void charSheet::countSuccesses()
 void charSheet::rollInititive()
 {
     int initRoll = (
-        (rand() % 6 + 1) + (rand() % 6 + 1) + (rand() % 6 + 1) + stat.Inititive
+        (rand() % 6 + 1) + (rand() % 6 + 1) + (rand() % 6 + 1) + Stats.Inititive
         );
-    cStats.curInit = initRoll;
+    cStats.CurrentInititive = initRoll;
 }
 
 void charSheet::setWeapon(int* pWeapon)
@@ -125,4 +144,40 @@ void charSheet::setWeapon(int* pWeapon)
     curWeapon.Damage = pWeapon[1];
     curWeapon.Reload = pWeapon[2];
     curWeapon.DrawSpeed = pWeapon[3];
+}
+
+void charSheet::Strength_GetSet(int curValue)
+{
+    Stats.Physical.Strength = curValue;
+}
+int charSheet::Strength_GetSet()
+{
+    return Stats.Physical.Strength;
+}
+
+void charSheet::Toughness_GetSet(int curValue)
+{
+    Stats.Physical.Toughness = curValue;
+}
+int charSheet::Toughness_GetSet()
+{
+    return Stats.Physical.Toughness;
+}
+
+void charSheet::Reflexes_GetSet(int curValue)
+{
+    Stats.Physical.Reflexes = curValue;
+}
+int charSheet::Reflexes_GetSet()
+{
+    return Stats.Physical.Reflexes;
+}
+
+void charSheet::Coordination_GetSet(int curValue)
+{
+    Stats.Physical.Coordination = curValue;
+}
+int charSheet::Coordination_GetSet()
+{
+    return Stats.Physical.Coordination;
 }

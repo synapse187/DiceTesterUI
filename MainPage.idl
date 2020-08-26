@@ -1,3 +1,5 @@
+import "CharacterSheet.idl";
+
 namespace DiceTesterUI
 {
     [default_interface]
@@ -5,5 +7,6 @@ namespace DiceTesterUI
     {
         MainPage();
         Int32 MyProperty;
+        CharacterSheet CharSheet{ get; };
     }
 }
